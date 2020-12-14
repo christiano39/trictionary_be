@@ -3,7 +3,7 @@ version: '3'
 services:
   pg:
     image: postgres
-    container_name: SERVER_NAME-api
+    container_name: tricktionary-api
     ports:
       - '5400:5432'
     environment:
@@ -19,7 +19,7 @@ services:
     restart: always
 
   pgadmin:
-    container_name: pgadmin_SERVER_NAME
+    container_name: pgadmin_tricktionary
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
