@@ -6,6 +6,8 @@ const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const gameSocketHandler = require("../sockets");
 
+const lobbies = {};
+
 const wordsRoutes = require("../words/wordsRoutes");
 
 const JSON_SIZE_LIMIT = "5mb";
@@ -34,16 +36,20 @@ const io = socketIo(app, {
 io.on("connection", (socket) => {
   console.log("New client connected");
 
+  socket.on("disconnecting", () => {
+    gameSocketHandler.handleLobbyLeave(io, socket, lobbies);
+  });
+
   socket.on("disconnect", () => {
-    console.log("Client disconnected");
+    console.log("Client disconnected", socket.id);
   });
 
   socket.on("create lobby", (username) => {
-    gameSocketHandler.handleLobbyCreate(io, socket, username);
+    gameSocketHandler.handleLobbyCreate(io, socket, username, lobbies);
   });
 
   socket.on("join lobby", (username, lobbyCode) => {
-    gameSocketHandler.handleLobbyJoin(io, socket, username, lobbyCode);
+    gameSocketHandler.handleLobbyJoin(io, socket, username, lobbyCode, lobbies);
   });
 });
 
