@@ -9,6 +9,7 @@ function handleLobbyCreate(io, socket, username, lobbies) {
   lobbies[lobbyCode] = {
     lobbyCode: lobbyCode,
     players: [{ id: socket.id, username }],
+    host: { id: socket.id, username },
     started: false,
     word: "",
     definition: "",
