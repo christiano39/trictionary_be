@@ -8,7 +8,7 @@ function handleLobbyCreate(io, socket, username, lobbies) {
 
   lobbies[lobbyCode] = {
     lobbyCode: lobbyCode,
-    players: [{ id: socket.id, username, definition: "" }],
+    players: [{ id: socket.id, username, definition: "", points: 0 }],
     host: { id: socket.id, username },
     started: false,
     guessing: false,

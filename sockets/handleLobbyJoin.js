@@ -9,7 +9,10 @@ function handleLobbyJoin(io, socket, username, lobbyCode, lobbies) {
 
   lobbies[lobbyCode] = {
     ...lobbies[lobbyCode],
-    players: [...lobbies[lobbyCode].players, { id: socket.id, username }],
+    players: [
+      ...lobbies[lobbyCode].players,
+      { id: socket.id, username, definition: "", points: 0 },
+    ],
   };
 
   io.to(lobbyCode).emit("game update", lobbies[lobbyCode]);
