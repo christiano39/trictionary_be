@@ -1,6 +1,10 @@
 module.exports = handleLobbyJoin;
 
 function handleLobbyJoin(io, socket, username, lobbyCode, lobbies) {
+  if (lobbyCode.length != 4) {
+    return;
+  }
+
   socket.join(lobbyCode);
 
   lobbies[lobbyCode] = {
