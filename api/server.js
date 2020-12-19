@@ -51,6 +51,10 @@ io.on("connection", (socket) => {
   socket.on("join lobby", (username, lobbyCode) => {
     gameSocketHandler.handleLobbyJoin(io, socket, username, lobbyCode, lobbies);
   });
+
+  socket.on("start game", (lobbyCode) => {
+    gameSocketHandler.handleStartGame(io, socket, lobbyCode, lobbies);
+  });
 });
 
 module.exports = app;
