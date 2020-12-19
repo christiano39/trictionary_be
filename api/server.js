@@ -55,6 +55,24 @@ io.on("connection", (socket) => {
   socket.on("start game", (lobbyCode) => {
     gameSocketHandler.handleStartGame(io, socket, lobbyCode, lobbies);
   });
+
+  socket.on("definition submitted", (definition, lobbyCode) => {
+    gameSocketHandler.handleSubmitDefinition(
+      io,
+      socket,
+      definition,
+      lobbyCode,
+      lobbies
+    );
+  });
+
+  socket.on("start guessing", (lobbyCode) => {
+    gameSocketHandler.handleStartGuessing(io, socket, lobbyCode, lobbies);
+  });
+
+  socket.on("guess", (lobbyCode, guess) => {
+    gameSocketHandler.handleGuess(io, socket, lobbyCode, guess, lobbies);
+  });
 });
 
 module.exports = app;
