@@ -8,11 +8,14 @@ function handleLobbyCreate(io, socket, username, lobbies) {
 
   lobbies[lobbyCode] = {
     lobbyCode: lobbyCode,
-    players: [{ id: socket.id, username }],
+    players: [{ id: socket.id, username, definition: "" }],
     host: { id: socket.id, username },
     started: false,
+    guessing: false,
+    completed: false,
     word: "",
     definition: "",
+    guesses: [],
   };
 
   io.to(lobbyCode).emit("game update", lobbies[lobbyCode]);
