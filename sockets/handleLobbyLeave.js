@@ -6,13 +6,21 @@ function handleLobbyLeave(io, socket, lobbies) {
 
     socket.leave(lobbyCode);
 
-    lobbies[lobbyCode].players = lobbies[lobbyCode].players.filter((player) => {
-      if (player.id === socket.id) {
-        return false;
-      } else {
-        return true;
-      }
-    });
+    if (
+      lobbies[lobbyCode] &&
+      lobbies[lobbyCode].players &&
+      !lobbies[lobbyCode].completed
+    ) {
+      lobbies[lobbyCode].players = lobbies[lobbyCode].players.filter(
+        (player) => {
+          if (player.id === socket.id) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+      );
+    }
 
     io.to(lobbyCode).emit("game update", lobbies[lobbyCode]);
 
