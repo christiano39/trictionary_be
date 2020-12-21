@@ -34,7 +34,7 @@ const io = socketIo(app, {
 });
 
 io.on("connection", (socket) => {
-  console.log("New client connected");
+  console.log("New client connected", socket.id);
 
   socket.on("disconnecting", () => {
     gameSocketHandler.handleLobbyLeave(io, socket, lobbies);
