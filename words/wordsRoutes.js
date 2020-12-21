@@ -58,6 +58,18 @@ router.get("/unmoderated", (req, res) => {
     });
 });
 
+router.put("/:id", (req, res) => {
+  const changes = req.body;
+  const id = req.params.id;
+  Words.update(id, changes)
+    .then((word) => {
+      res.status(200).json({ updated: word });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
 router.put("/:id/approve", (req, res) => {
   Words.getById(req.params.id).then((wordObj) => {
     wordObj = {
