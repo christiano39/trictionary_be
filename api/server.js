@@ -73,6 +73,10 @@ io.on("connection", (socket) => {
   socket.on("guess", (lobbyCode, guess) => {
     gameSocketHandler.handleGuess(io, socket, lobbyCode, guess, lobbies);
   });
+
+  socket.on("play again", (lobbyCode) => {
+    gameSocketHandler.handlePlayAgain(io, socket, lobbyCode, lobbies);
+  });
 });
 
 module.exports = app;

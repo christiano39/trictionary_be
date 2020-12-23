@@ -5,6 +5,7 @@ const handleStartGame = require("./handleStartGame");
 const handleSubmitDefinition = require("./handleSubmitDefinition");
 const handleStartGuessing = require("./handleStartGuessing");
 const handleGuess = require("./handleGuess");
+const handlePlayAgain = require("./handlePlayAgain");
 
 module.exports = {
   handleLobbyCreate,
@@ -14,4 +15,5 @@ module.exports = {
   handleSubmitDefinition,
   handleStartGuessing,
   handleGuess,
+  handlePlayAgain,
 };
