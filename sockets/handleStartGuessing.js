@@ -3,7 +3,7 @@ module.exports = handleStartGuessing;
 function handleStartGuessing(io, socket, lobbyCode, lobbies) {
   lobbies[lobbyCode] = {
     ...lobbies[lobbyCode],
-    guessing: true,
+    phase: GUESSING,
   };
 
   io.to(lobbyCode).emit("game update", lobbies[lobbyCode]);

@@ -9,7 +9,7 @@ function handleGuess(io, socket, lobbyCode, guess, lobbies) {
   if (lobbies[lobbyCode].players.length <= lobbies[lobbyCode].guesses.length) {
     lobbies[lobbyCode] = {
       ...lobbies[lobbyCode],
-      completed: true,
+      phase: "POSTGAME",
     };
 
     lobbies[lobbyCode] = calculatePoints(lobbies[lobbyCode]);

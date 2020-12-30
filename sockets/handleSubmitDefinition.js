@@ -18,7 +18,7 @@ function handleSubmitDefinition(io, socket, definition, lobbyCode, lobbies) {
   if (numSubmitted === lobbies[lobbyCode].players.length - 1) {
     lobbies[lobbyCode] = {
       ...lobbies[lobbyCode],
-      guessing: true,
+      phase: "GUESSING",
     };
   }
 

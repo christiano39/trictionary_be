@@ -9,9 +9,7 @@ function handlePlayAgain(io, socket, lobbyCode, lobbies) {
         definition: "",
       };
     }),
-    started: false,
-    guessing: false,
-    completed: false,
+    phase: "PREGAME",
     word: "",
     definition: "",
     guesses: [],

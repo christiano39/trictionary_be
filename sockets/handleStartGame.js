@@ -10,7 +10,7 @@ function handleStartGame(io, socket, lobbyCode, lobbies) {
 
       lobbies[lobbyCode] = {
         ...lobbies[lobbyCode],
-        started: true,
+        phase: "WRITING",
         word: word.word,
         definition: word.definition,
       };
