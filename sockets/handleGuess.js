@@ -1,3 +1,5 @@
+const Rounds = require("../rounds/roundsModel");
+
 module.exports = handleGuess;
 
 function handleGuess(io, socket, lobbyCode, guess, lobbies) {
@@ -7,6 +9,15 @@ function handleGuess(io, socket, lobbyCode, guess, lobbies) {
   };
 
   if (lobbies[lobbyCode].players.length <= lobbies[lobbyCode].guesses.length) {
+    const roundId = lobbies[lobbyCode].roundId;
+    Rounds.roundFinished(roundId)
+      .then(() => {
+        console.log("round ended");
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+
     lobbies[lobbyCode] = {
       ...lobbies[lobbyCode],
       phase: "POSTGAME",
