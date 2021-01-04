@@ -14,6 +14,7 @@ function handleLobbyCreate(io, socket, username, lobbies) {
     word: "",
     definition: "",
     guesses: [],
+    roundId: null,
   };
 
   io.to(lobbyCode).emit("game update", lobbies[lobbyCode]);
