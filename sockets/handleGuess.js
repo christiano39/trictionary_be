@@ -1,8 +1,39 @@
 const Rounds = require("../rounds/roundsModel");
+const Votes = require("../votes/votesModel");
 
 module.exports = handleGuess;
 
 function handleGuess(io, socket, lobbyCode, guess, lobbies) {
+  if (guess === "0") {
+    Votes.add(socket.id, parseInt(guess), lobbies[lobbyCode].roundId)
+      .then(() => {})
+      .catch((err) => {
+        console.log(err.message);
+      });
+  } else {
+    const playerWhoVoted = lobbies[lobbyCode].players.find(
+      (player) => player.id === socket.id
+    );
+    const playerWhoWasVotedFor = lobbies[lobbyCode].players.find(
+      (player) => player.id === guess
+    );
+
+    console.log("Player who voted", playerWhoVoted);
+    console.log("Player who was voted for", playerWhoWasVotedFor);
+
+    Votes.add(
+      playerWhoVoted.id,
+      playerWhoWasVotedFor.definitionId,
+      lobbies[lobbyCode].roundId
+    )
+      .then(() => {})
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
+  // Votes.add(socket.id, guess, lobbies[lobbyCode].roundId);
+
   lobbies[lobbyCode] = {
     ...lobbies[lobbyCode],
     guesses: [...lobbies[lobbyCode].guesses, { player: socket.id, guess }],
