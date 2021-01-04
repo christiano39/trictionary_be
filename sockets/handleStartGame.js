@@ -1,5 +1,6 @@
 const Words = require("../words/wordsModel");
 const Rounds = require("../rounds/roundsModel");
+const UserRounds = require("../userRounds/userRoundsModel");
 
 module.exports = handleStartGame;
 
@@ -19,6 +20,8 @@ function handleStartGame(io, socket, lobbyCode, lobbies) {
             roundId,
           };
 
+          addAllUserRounds(lobbies[lobbyCode].players, roundId);
+
           io.to(lobbyCode).emit("game update", lobbies[lobbyCode]);
 
           console.log(lobbies[lobbyCode]);
@@ -30,4 +33,14 @@ function handleStartGame(io, socket, lobbyCode, lobbies) {
     .catch((err) => {
       console.log(err.message);
     });
+}
+
+function addAllUserRounds(players, roundId) {
+  players.forEach((player) => {
+    UserRounds.add(player.id, roundId)
+      .then(() => {})
+      .catch((err) => {
+        console.log(err.message);
+      });
+  });
 }
