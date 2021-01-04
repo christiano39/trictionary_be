@@ -32,8 +32,6 @@ function handleGuess(io, socket, lobbyCode, guess, lobbies) {
       });
   }
 
-  // Votes.add(socket.id, guess, lobbies[lobbyCode].roundId);
-
   lobbies[lobbyCode] = {
     ...lobbies[lobbyCode],
     guesses: [...lobbies[lobbyCode].guesses, { player: socket.id, guess }],
