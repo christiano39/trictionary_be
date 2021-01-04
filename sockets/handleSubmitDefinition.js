@@ -4,36 +4,39 @@ module.exports = handleSubmitDefinition;
 
 function handleSubmitDefinition(io, socket, definition, lobbyCode, lobbies) {
   let numSubmitted = 0;
+  let newPlayer = lobbies[lobbyCode].players.find(
+    (player) => player.id === socket.id
+  );
 
-  lobbies[lobbyCode].players = lobbies[lobbyCode].players.map((player) => {
-    if (player.definition) {
-      numSubmitted++;
-    }
+  Definitions.add(newPlayer.id, definition, lobbies[lobbyCode].roundId)
+    .then(([definitionId]) => {
+      console.log("Definition ID: ", definitionId);
+      newPlayer = { ...newPlayer, definition, definitionId };
 
-    if (player.id === socket.id) {
-      Definitions.add(player.id, definition, lobbies[lobbyCode].roundId)
-        .then(([definitionId]) => {
-          // may need definition id
-          console.log(definitionId);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
+      lobbies[lobbyCode].players = lobbies[lobbyCode].players.map((player) => {
+        if (player.definition) {
+          numSubmitted++;
+        }
 
-      return { ...player, definition };
-    } else {
-      return player;
-    }
-  });
+        if (player.id === newPlayer.id) {
+          return newPlayer;
+        } else {
+          return player;
+        }
+      });
 
-  if (numSubmitted === lobbies[lobbyCode].players.length - 1) {
-    lobbies[lobbyCode] = {
-      ...lobbies[lobbyCode],
-      phase: "GUESSING",
-    };
-  }
+      if (numSubmitted === lobbies[lobbyCode].players.length - 1) {
+        lobbies[lobbyCode] = {
+          ...lobbies[lobbyCode],
+          phase: "GUESSING",
+        };
+      }
 
-  io.to(lobbyCode).emit("game update", lobbies[lobbyCode]);
+      io.to(lobbyCode).emit("game update", lobbies[lobbyCode]);
 
-  console.log(lobbies[lobbyCode]);
+      console.log(lobbies[lobbyCode]);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 }
