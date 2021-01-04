@@ -1,3 +1,5 @@
+const Definitions = require("../definitions/definitionsModel");
+
 module.exports = handleSubmitDefinition;
 
 function handleSubmitDefinition(io, socket, definition, lobbyCode, lobbies) {
@@ -9,6 +11,15 @@ function handleSubmitDefinition(io, socket, definition, lobbyCode, lobbies) {
     }
 
     if (player.id === socket.id) {
+      Definitions.add(player.id, definition, lobbies[lobbyCode].roundId)
+        .then(([definitionId]) => {
+          // may need definition id
+          console.log(definitionId);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+
       return { ...player, definition };
     } else {
       return player;
