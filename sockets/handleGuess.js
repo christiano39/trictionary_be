@@ -18,9 +18,6 @@ function handleGuess(io, socket, lobbyCode, guess, lobbies) {
       (player) => player.id === guess
     );
 
-    console.log("Player who voted", playerWhoVoted);
-    console.log("Player who was voted for", playerWhoWasVotedFor);
-
     Votes.add(
       playerWhoVoted.id,
       playerWhoWasVotedFor.definitionId,
