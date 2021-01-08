@@ -66,10 +66,6 @@ io.on("connection", (socket) => {
     );
   });
 
-  socket.on("start guessing", (lobbyCode) => {
-    gameSocketHandler.handleStartGuessing(io, socket, lobbyCode, lobbies);
-  });
-
   socket.on("guess", (lobbyCode, guess) => {
     gameSocketHandler.handleGuess(io, socket, lobbyCode, guess, lobbies);
   });
